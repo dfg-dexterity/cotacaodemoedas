@@ -215,7 +215,9 @@ th[aria-sort="descending"] .th-ord::after { content: " ▼"; }
   .conv-par > button { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
   .passo-conta .formula { font-size: 0.8125rem; }
   .tabela-conv th, .tabela-conv td { padding: 8px 6px; }
-  .tabela-conv td:last-child { white-space: normal; }
+  /* A data e a hora do boletim já aparecem na conta acima: no celular a coluna
+     sai, para a tabela caber no cartão sem rolar de lado. */
+  .tabela-conv th:last-child, .tabela-conv td:last-child { display: none; }
 }
 
 /* ========================== MODAL CARGA SAP ============================= */
