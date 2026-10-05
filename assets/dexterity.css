@@ -1,0 +1,500 @@
+/*
+ * ============================================================================
+ * Dexterity IT Solutions — sistema visual das ferramentas de mercado
+ * ============================================================================
+ *
+ * Porte em CSS puro do tema usado na Calculadora CDI/CDB (Tailwind 4 +
+ * shadcn/ui). Este arquivo é a fonte única do visual e é mantido idêntico em
+ * todos os aplicativos de Dados de Mercado — ao alterar, replique nos demais:
+ *
+ *   calculadoramtmdexterity · cotacao-derivativos-b3 · taxas-indices · bndes-um
+ *   cotacaodemoedas · curvas · tesourodireto
+ *
+ * Base #1B1B1B · off-white #F7F3E7 · cerceta #009994 · destaque #00B3AC
+ * âmbar #FFA436 · roxo #98569A · musgo #597C59
+ * Tipografia: Barlow Condensed (display) · Figtree (texto) · IBM Plex Mono
+ * (rótulos e números). Cantos retos, grades com fio de 1px, tema escuro único.
+ *
+ * Semântica de cor: cerceta = alta/ganho, âmbar = baixa/atenção, vermelho só
+ * para erro, roxo para nota informativa.
+ * ----------------------------------------------------------------------------
+ */
+
+/* ============================== 1. TOKENS ================================= */
+
+:root {
+  /* Superfícies e tinta */
+  --dxt-base: #1B1B1B;
+  --dxt-surface: #242424;
+  --dxt-surface-2: #2E2E2E;
+  --dxt-off: #F7F3E7;
+  --dxt-rotulo: #908C85;
+  --dxt-muted: #A49F98;
+  --dxt-line: rgba(247, 243, 231, 0.13);
+  --dxt-line-soft: rgba(247, 243, 231, 0.08);
+
+  /* Naipes da marca */
+  --dxt-cerceta: #009994;
+  --dxt-acc-txt: #00B3AC;
+  --dxt-amarelo: #FFA436;
+  --dxt-roxo: #98569A;
+  --dxt-musgo: #597C59;
+  --dxt-vermelho: #D9563E;
+
+  /* Realces de interação (mesma escala do tema shadcn de origem) */
+  --dxt-elevate-1: rgba(247, 243, 231, 0.05);
+  --dxt-elevate-2: rgba(247, 243, 231, 0.10);
+
+  /* Tipografia */
+  --dxt-font-sans: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --dxt-font-display: 'Barlow Condensed', 'Figtree', system-ui, sans-serif;
+  --dxt-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Medidas */
+  --dxt-container: min(1180px, 92vw);
+  --dxt-radius: 0;
+
+  color-scheme: dark;
+}
+
+/* ============================== 2. BASE =================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--dxt-base);
+  color: var(--dxt-off);
+  font-family: var(--dxt-font-sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Títulos condensados em caixa alta, como nas seções do site. */
+h1, h2, h3, h4 {
+  font-family: var(--dxt-font-display);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  margin: 0;
+}
+h1 { line-height: 0.92; }
+
+code, kbd, samp, pre { font-family: var(--dxt-font-mono); }
+
+a { color: inherit; }
+
+/* Foco visível na cor de destaque, sem anel arredondado. */
+:focus-visible {
+  outline: 2px solid var(--dxt-amarelo);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--dxt-cerceta);
+  color: var(--dxt-off);
+}
+
+/* Tabulação numérica: valores alinham coluna a coluna. */
+table { font-variant-numeric: tabular-nums; }
+
+/* ========================= 3. PRIMITIVAS DE MARCA ========================= */
+
+/* Rótulo curto acima de um título — "01 / MÉTODO", "INDICADORES" etc. */
+.dxt-eyebrow {
+  font-family: var(--dxt-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dxt-acc-txt);
+  display: inline-block;
+}
+.dxt-eyebrow-muted { color: var(--dxt-rotulo); }
+
+.dxt-title {
+  font-family: var(--dxt-font-display);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+/* Números: mono com dígitos de largura fixa. */
+.dxt-num {
+  font-family: var(--dxt-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.dxt-rule { border: 0; border-top: 1px solid var(--dxt-line); }
+
+/*
+ * Grade de cartões separada por um fio de 1px, como os blocos de serviços do
+ * site: o fundo da grade vira a linha e cada célula cobre o resto.
+ */
+.dxt-grid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--dxt-line);
+  border: 1px solid var(--dxt-line);
+}
+.dxt-grid > * { background-color: var(--dxt-surface); }
+
+.dxt-container { width: var(--dxt-container); margin-inline: auto; }
+
+/* Direção de variação — alta é cerceta, baixa é âmbar (nunca vermelho). */
+.dxt-up   { color: var(--dxt-acc-txt); }
+.dxt-down { color: var(--dxt-amarelo); }
+
+/* ============================ 4. CHROME =================================== */
+
+/* Barra de marca fixa no topo. */
+.dxt-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--dxt-line);
+  background: rgba(27, 27, 27, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.dxt-topbar-inner {
+  width: var(--dxt-container);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 16px 0;
+}
+.dxt-topbar .dxt-logo { height: 27px; width: auto; overflow: visible; flex: none; display: block; }
+.dxt-topbar-right { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px; }
+
+/* Menu: texto simples, sem cápsula, ativo em cerceta. */
+.dxt-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.dxt-nav a {
+  white-space: nowrap;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--dxt-muted);
+  transition: color .15s ease;
+}
+.dxt-nav a:hover { color: var(--dxt-off); }
+.dxt-nav a[aria-current="page"], .dxt-nav a.is-active { color: var(--dxt-acc-txt); }
+
+/* Faixa de título da página. */
+.dxt-pagehead { border-bottom: 1px solid var(--dxt-line); }
+.dxt-pagehead-inner {
+  width: var(--dxt-container);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px 0;
+}
+@media (min-width: 640px) { .dxt-pagehead-inner { padding: 56px 0; } }
+.dxt-pagehead h1 { margin-top: 12px; font-size: clamp(2.25rem, 5vw, 3.5rem); }
+.dxt-pagehead p {
+  margin: 16px 0 0;
+  max-width: 42rem;
+  font-size: 0.875rem;
+  color: var(--dxt-rotulo);
+}
+
+/* Rodapé. */
+.dxt-footer { margin-top: 64px; border-top: 1px solid var(--dxt-line); }
+.dxt-footer-inner {
+  width: var(--dxt-container);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 48px 0;
+}
+.dxt-footer .dxt-logo { height: 27px; width: auto; overflow: visible; display: block; }
+.dxt-footer-brand { max-width: 36ch; }
+.dxt-footer-brand p, .dxt-footer-brand address {
+  font-size: 0.875rem;
+  color: var(--dxt-rotulo);
+  font-style: normal;
+}
+.dxt-footer-brand p { margin: 16px 0 0; }
+.dxt-footer-brand address { margin-top: 12px; line-height: 1.7; }
+.dxt-footer h4 { margin: 0 0 12px; }
+.dxt-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; font-size: 0.875rem; }
+.dxt-footer ul a { text-decoration: none; color: var(--dxt-muted); transition: color .15s ease; }
+.dxt-footer ul a:hover { color: var(--dxt-off); }
+.dxt-footer ul a[aria-current="page"] { color: var(--dxt-acc-txt); }
+.dxt-footer-nota { border-top: 1px solid var(--dxt-line); }
+.dxt-footer-nota > div { width: var(--dxt-container); margin-inline: auto; padding: 24px 0; }
+.dxt-footer-nota p {
+  margin: 0;
+  max-width: 64rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--dxt-rotulo);
+}
+
+/* =========================== 5. COMPONENTES =============================== */
+
+/* Bloco reto com fio de 1px, sem sombra — como os cartões do site. */
+.dxt-card {
+  border: 1px solid var(--dxt-line);
+  background: var(--dxt-surface);
+  color: var(--dxt-off);
+  border-radius: 0;
+}
+.dxt-card-head { padding: 24px 24px 0; }
+.dxt-card-title {
+  font-family: var(--dxt-font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.dxt-card-body { padding: 24px; }
+
+/* Botão reto, em caixa alta, na fonte condensada. */
+.dxt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  min-height: 36px;
+  padding: 8px 16px;
+  border-radius: 0;
+  border: 1px solid var(--dxt-cerceta);
+  background: var(--dxt-cerceta);
+  color: var(--dxt-base);
+  font-family: var(--dxt-font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.dxt-btn:hover:not(:disabled) { background: transparent; color: var(--dxt-cerceta); }
+.dxt-btn:disabled { opacity: .5; pointer-events: none; }
+
+/* Fio discreto que acende no hover. */
+.dxt-btn--ghost {
+  border-color: var(--dxt-line);
+  background: transparent;
+  color: var(--dxt-off);
+}
+.dxt-btn--ghost:hover:not(:disabled) {
+  border-color: var(--dxt-off);
+  background: var(--dxt-elevate-1);
+  color: var(--dxt-off);
+}
+
+.dxt-btn--sm { min-height: 32px; padding: 6px 12px; font-size: 0.8125rem; }
+.dxt-btn--icon { min-height: 36px; width: 36px; padding: 0; }
+
+/* Campos. */
+.dxt-input, .dxt-select {
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: 0;
+  border: 1px solid var(--dxt-line);
+  background: var(--dxt-base);
+  color: var(--dxt-off);
+  font-family: var(--dxt-font-sans);
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+.dxt-input:hover, .dxt-select:hover { border-color: rgba(247, 243, 231, 0.24); }
+.dxt-input::placeholder { color: var(--dxt-rotulo); }
+.dxt-select {
+  appearance: none;
+  padding-right: 32px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--dxt-rotulo) 50%),
+                    linear-gradient(135deg, var(--dxt-rotulo) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+/* O seletor de data do WebKit vem claro por padrão. */
+.dxt-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacity(.55); cursor: pointer; }
+.dxt-input[type="date"]::-webkit-calendar-picker-indicator:hover { filter: invert(1) opacity(.9); }
+
+/* Rótulo de apoio em mono. */
+.dxt-label {
+  font-family: var(--dxt-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dxt-rotulo);
+}
+
+/* Etiqueta reta com fio — estado, unidade, contagem. */
+.dxt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--dxt-line);
+  background: transparent;
+  color: var(--dxt-muted);
+  font-family: var(--dxt-font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.dxt-badge--up   { border-color: rgba(0, 179, 172, .45); color: var(--dxt-acc-txt); }
+.dxt-badge--down { border-color: rgba(255, 164, 54, .45); color: var(--dxt-amarelo); }
+.dxt-badge--info { border-color: rgba(152, 86, 154, .45); color: #C08FC2; }
+
+/* Filtro por texto, sem cápsula — o ativo ganha fio e cor. */
+.dxt-chip {
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--dxt-muted);
+  font-family: var(--dxt-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.dxt-chip:hover { color: var(--dxt-off); background: var(--dxt-elevate-1); }
+.dxt-chip.is-active {
+  border-color: var(--dxt-cerceta);
+  color: var(--dxt-acc-txt);
+  background: transparent;
+}
+
+/* Tabela: cabeçalho em mono, linhas separadas por fio. */
+.dxt-table { width: 100%; border-collapse: collapse; }
+.dxt-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--dxt-line);
+  font-family: var(--dxt-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dxt-rotulo);
+  white-space: nowrap;
+}
+.dxt-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--dxt-line-soft);
+  font-size: 0.875rem;
+  color: var(--dxt-off);
+}
+.dxt-table tbody tr:hover { background: var(--dxt-elevate-1); }
+.dxt-table .right { text-align: right; }
+
+/* Sobreposição modal. */
+.dxt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.dxt-modal[hidden] { display: none; }
+.dxt-modal-box {
+  width: 100%;
+  max-width: 580px;
+  border: 1px solid var(--dxt-line);
+  background: var(--dxt-surface);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+  padding: 24px;
+}
+
+/* Barra de ferramentas acima do conteúdo. */
+.dxt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.dxt-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+/* Realce de superfície no hover, para blocos clicáveis. */
+.dxt-hover-elevate { transition: background-color .15s ease, border-color .15s ease; }
+.dxt-hover-elevate:hover { background-color: var(--dxt-surface-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* ===================== 6. CELULAR E MODO INCORPORADO ====================== */
+
+/*
+ * Celular: o menu vira uma faixa que rola na horizontal em vez de quebrar em
+ * várias linhas — a barra fixa não pode comer a tela.
+ */
+@media (max-width: 640px) {
+  .dxt-topbar-right {
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .dxt-topbar-right::-webkit-scrollbar { display: none; }
+  .dxt-nav { flex-wrap: nowrap; }
+  .dxt-pagehead h1 { font-size: clamp(2rem, 9vw, 3.5rem); }
+  /* Sobrancelha longa quebra em duas linhas: com line-height 1 elas encostam. */
+  .dxt-eyebrow { line-height: 1.5; }
+}
+
+/*
+ * Modo incorporado (?embed=1): a ferramenta dentro de um <iframe> na página do
+ * site (Odoo), no Notion ou na intranet. A página que incorpora já tem título,
+ * texto e rodapé, então aqui fica só a ferramenta, na largura toda da moldura.
+ * A classe vai no <html> por um script no <head>, antes da primeira pintura:
+ *
+ *   if (new URLSearchParams(location.search).get("embed") === "1")
+ *     document.documentElement.classList.add("modo-embutido");
+ *
+ * Use .dxt-so-site em qualquer bloco que não deva aparecer incorporado.
+ */
+.modo-embutido { --dxt-container: calc(100% - 32px); }
+.modo-embutido .dxt-topbar {
+  position: static;
+  background: var(--dxt-base);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.modo-embutido .dxt-topbar-inner { padding: 10px 0; }
+.modo-embutido .dxt-topbar .dxt-logo { height: 20px; }
+.modo-embutido .dxt-pagehead-inner { padding: 12px 0; align-items: center; }
+.modo-embutido .dxt-pagehead-inner > div:first-child { display: none; }
+/* Faixa de título sem controles: some inteira. */
+.modo-embutido .dxt-pagehead:has(.dxt-pagehead-inner > :only-child) { display: none; }
+.modo-embutido .dxt-footer { margin-top: 32px; }
+.modo-embutido .dxt-footer-inner { display: none; }
+.modo-embutido .dxt-footer-nota { border-top: 0; }
+.modo-embutido .dxt-so-site { display: none !important; }
