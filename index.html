@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cotação de moedas hoje: PTAX do dólar, euro e mais 8</title>
+  <meta name="description"
+    content="PTAX de compra e venda do dólar, euro, libra, iene e mais 6 moedas, direto do Banco Central: fechamento do dia, série histórica, conversor e carga no SAP." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1B1B1B" />
+
+  <!-- Endereço público no domínio da Dexterity: a página do site que apresenta
+       esta ferramenta (a aplicação entra nela por iframe, com ?embed=1). -->
+  <link rel="canonical" href="https://www.dexterityit.com.br/cotacao-de-moedas" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Dexterity IT Solutions" />
+  <meta property="og:title" content="Cotação de moedas hoje: PTAX do dólar, euro e mais 8" />
+  <meta property="og:description"
+    content="PTAX de compra e venda de 10 moedas direto do Banco Central: fechamento do dia, série histórica com gráfico, conversor e exportação para Excel e SAP. Ferramenta gratuita da Dexterity." />
+  <meta property="og:url" content="https://www.dexterityit.com.br/cotacao-de-moedas" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Cotação de moedas hoje: PTAX do dólar, euro e mais 8" />
+  <meta name="twitter:description"
+    content="PTAX de compra e venda de 10 moedas direto do Banco Central: fechamento do dia, histórico, conversor e exportação para Excel e SAP." />
+
+  <!-- O texto das perguntas (FAQPage) é o mesmo da seção visível "Perguntas frequentes":
+       ao mudar um, mude o outro. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://www.dexterityit.com.br/cotacao-de-moedas#ferramenta",
+        "name": "Cotação de Moedas",
+        "url": "https://www.dexterityit.com.br/cotacao-de-moedas",
+        "description": "PTAX de compra e venda e paridade com o dólar de dez moedas (dólar americano, euro, libra esterlina, iene, franco suíço, dólar canadense, dólar australiano e coroas dinamarquesa, norueguesa e sueca), direto do Banco Central do Brasil: painel do fechamento do dia, série histórica com gráfico, conversor de moedas e exportação para CSV, Excel e carga no SAP (F2610).",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "pt-BR",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+        "publisher": {
+          "@type": "ProfessionalService",
+          "@id": "https://www.dexterityit.com.br/#organizacao",
+          "name": "Dexterity IT Solutions",
+          "url": "https://www.dexterityit.com.br"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.dexterityit.com.br/" },
+          { "@type": "ListItem", "position": 2, "name": "Ferramentas", "item": "https://www.dexterityit.com.br/ferramentas" },
+          { "@type": "ListItem", "position": 3, "name": "Cotação de Moedas", "item": "https://www.dexterityit.com.br/cotacao-de-moedas" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "O que é a PTAX?",
+            "acceptedAnswer": { "@type": "Answer", "text": "É a taxa de câmbio de referência calculada pelo Banco Central do Brasil. Em cada dia útil, o Banco Central consulta os dealers de câmbio em quatro janelas (por volta das 10h, 11h, 12h e 13h) e publica um boletim a cada consulta; o boletim de fechamento, que sai pouco depois das 13h, é a média das quatro e é o que contratos, NDFs e a contabilidade chamam de PTAX do dia." }
+          },
+          {
+            "@type": "Question",
+            "name": "Qual PTAX usar: compra ou venda?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Depende do uso. A PTAX de venda é a referência usual de contratos de câmbio e de NDF e costuma corrigir obrigações em moeda estrangeira; a PTAX de compra costuma corrigir direitos, como contas a receber e aplicações no exterior. Confirme a regra no contrato ou na política contábil da empresa: a ferramenta mostra as duas e deixa escolher no conversor e na carga para o SAP." }
+          },
+          {
+            "@type": "Question",
+            "name": "O que são as moedas tipo A e tipo B?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Na PTAX, cada moeda tem uma paridade com o dólar. Nas moedas tipo A (iene, franco suíço, dólar canadense e coroas dinamarquesa, norueguesa e sueca), a paridade é quantas unidades da moeda valem 1 dólar; nas tipo B (euro, libra esterlina e dólar australiano), é quantos dólares vale 1 unidade da moeda. O dólar americano é a referência." }
+          },
+          {
+            "@type": "Question",
+            "name": "Por que a cotação de hoje ainda não aparece?",
+            "acceptedAnswer": { "@type": "Answer", "text": "O boletim de fechamento sai por volta das 13h10 (horário de Brasília) nos dias úteis. Antes disso, e em fins de semana e feriados, o painel mostra o último fechamento disponível; a data e a hora do boletim aparecem em cada moeda." }
+          },
+          {
+            "@type": "Question",
+            "name": "Como levar as cotações para o SAP?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No Histórico, escolha a moeda e o período e clique em Carga SAP. A ferramenta gera o Excel no layout do app Importar Dados de Mercado (SAP Fiori F2610) para taxas de câmbio, com categoria, tipo de taxa (M por padrão), moeda de origem, moeda de destino (BRL), data efetiva e taxa de compra ou de venda. Confira os nomes das colunas com o modelo baixado do próprio F2610 antes da primeira carga." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Figtree:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/dexterity.css" />
+  <link rel="stylesheet" href="assets/app.css" />
+
+  <!-- O modo incorporado (?embed=1) é aplicado antes da primeira pintura,
+       para o iframe não piscar com a faixa de título e o rodapé. -->
+  <script>
+    if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("modo-embutido");
+  </script>
+</head>
+
+<body>
+  <!-- Sprite de ícones (traço, herdam currentColor) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="ic-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></symbol>
+    <symbol id="ic-x" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></symbol>
+    <symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></symbol>
+    <symbol id="ic-send" viewBox="0 0 24 24"><path d="M12 17V4"/><path d="M7 9l5-5 5 5"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></symbol>
+    <symbol id="ic-swap" viewBox="0 0 24 24"><path d="M7 4L3 8l4 4"/><path d="M3 8h14"/><path d="M17 20l4-4-4-4"/><path d="M21 16H7"/></symbol>
+  </svg>
+
+  <!-- ===================== Barra de marca ===================== -->
+  <div class="dxt-topbar">
+    <div class="dxt-topbar-inner">
+      <a href="https://www.dexterityit.com.br" aria-label="Dexterity IT Solutions — ir para o site">
+        <svg class="dxt-logo" viewBox="0 0 445.4 100" role="img" aria-label="Dexterity IT Solutions"
+             style="--mk:var(--dxt-off);--acc:var(--dxt-cerceta)">
+          <g transform="scale(0.64475) translate(-206.8,-19)">
+                <path fill="var(--mk)" d="M306.8,41.1c0,6.7-1.3,13.1-3.8,19.1s-6.1,11.4-10.8,16.1c-4.7,4.7-10.2,8.4-16.1,10.8c-6,2.5-12.4,3.8-19.1,3.8c-0.2,0-1.8,0-3.4,0c-1.1,0-2.2,0-2.8,0.1c-0.4,0-0.7-0.2-0.9-0.5l-21.6-35.4l-21-34.4c-0.4-0.6,0.1-1.5,0.8-1.5h48.5h49.2c0.5,0,1,0.4,1,1v10V41.1z"/>
+                <path fill="var(--acc)" d="M318.4,40.7c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0.1,6.6,1.4,12.9,3.9,18.8c2.5,5.9,6.1,11.3,10.7,15.9c4.7,4.7,10.2,8.4,16.1,10.8c6,2.5,12.4,3.8,19.1,3.8h17.4h15.7c0.8,0,1.2-0.8,0.8-1.5l-10-16.4l-10.9-17.8c-6.8-11.2-14.9-20.2-24.5-26.4c-9.6-6.2-20.8-9.6-33.9-9.6h-3.4c-0.5,0-1,0.4-1,1V30V40.7z"/>
+                <path fill="var(--mk)" d="M306.8,152.3c0-6.7-1.3-13.1-3.8-19.1s-6.1-11.4-10.8-16.1c-4.7-4.7-10.2-8.4-16.1-10.8c-6-2.5-12.4-3.8-19.1-3.8c-0.2,0-1.8,0-3.4,0c-1.1,0-2.2,0-2.8-0.1c-0.4,0-0.7,0.2-0.9,0.5l-21.6,35.4l-21,34.4c-0.4,0.6,0.1,1.5,0.8,1.5h48.5h49.2c0.5,0,1-0.4,1-1v-10V152.3z"/>
+                <path fill="var(--mk)" d="M368.2,102.5c-6.7,0-13.1,1.3-19.1,3.8s-11.4,6.1-16.1,10.8c-4.7,4.7-8.3,10.1-10.8,16.1c-2.5,5.9-3.8,12.4-3.8,19c0,0,0,0.1,0,0.1s0,0.1,0,0.1c0,0,0,0,0,0c0,0,0,0,0,0v5.1v5.1v5.8v4.8c0,0.5,0.5,1,1,1c12.5-0.4,24.5-3.9,35-9.9c10.8-6.2,20.1-15.1,26.8-26.1l10.9-17.8l10-16.3c0.4-0.6-0.1-1.5-0.8-1.5h-15.7H368.2z"/>
+              </g>
+          <g transform="translate(152,17) scale(0.51123) translate(-17.5,-217.5)">
+                <path fill="var(--mk)" d="M41.5,346.9h-23c-0.4,0-0.8-0.4-0.8-0.8V218.6c0-0.4,0.4-0.8,0.8-0.8h23c10.5,0,19.9,5.4,26.3,15.3c7.2,11,10.8,27.6,10.8,49.3c0,21.7-3.6,38.3-10.8,49.3C61.3,341.5,52,346.9,41.5,346.9zM33.9,330.7h7.6c13.1,0,21-18.1,21-48.4s-7.8-48.4-21-48.4h-7.6V330.7z"/>
+                <path fill="var(--mk)" d="M141.3,233.2v-14.6c0-0.4-0.4-0.8-0.8-0.8H93.6c-0.4,0-0.8,0.4-0.8,0.8v55.6v16.2v55.6c0,0.4,0.4,0.8,0.8,0.8h46.9c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8H109v-40.2h26.4c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8H109V234h31.5C141,234,141.3,233.7,141.3,233.2z"/>
+                <path fill="var(--mk)" d="M148.8,346.9h15.7c0.3,0,0.6-0.2,0.8-0.5l17-42.3l17,42.3c0.1,0.3,0.4,0.5,0.8,0.5h15.7c0.6,0,1-0.6,0.8-1.1L191,282.3l19.4-48.3h22.8v112c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V234H274c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-24.6h-16.2h-16.3H200c-0.3,0-0.6,0.2-0.8,0.5l-17,42.3l-17-42.3c-0.1-0.3-0.4-0.5-0.8-0.5h-15.7c-0.6,0-1,0.6-0.8,1.1l25.5,63.4l-25.5,63.4C147.9,346.3,148.3,346.9,148.8,346.9z"/>
+                <path fill="var(--mk)" d="M332.7,233.2v-14.6c0-0.4-0.4-0.8-0.8-0.8H285c-0.4,0-0.8,0.4-0.8,0.8v55.6v16.2v55.6c0,0.4,0.4,0.8,0.8,0.8h46.9c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-31.5v-40.2h26.4c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-26.4V234h31.5C332.3,234,332.7,233.7,332.7,233.2z"/>
+                <path fill="var(--mk)" d="M363.1,297.1v-16.2V234h4c13.9,0,21,7.9,21,23.4c0,12.8-4.7,20.3-14.3,22.7l-9,2.2l25.7,64c0.1,0.3,0.4,0.5,0.8,0.5H407c0.6,0,1-0.6,0.8-1.1l-21.4-53.3c11.5-6.3,18-18.6,18-35c0-29.2-19.2-39.6-37.1-39.6h-19.4c-0.4,0-0.8,0.4-0.8,0.8v62.2v16.2v49c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V297.1z"/>
+                <path fill="var(--acc)" d="M434,346.9h-14.6c-0.4,0-0.8-0.4-0.8-0.8V218.7c0-0.4,0.4-0.8,0.8-0.8H434c0.4,0,0.8,0.4,0.8,0.8v127.4C434.8,346.5,434.4,346.9,434,346.9z"/>
+                <path fill="var(--acc)" d="M485.9,217.9h-16.2h-17.1h-7.4c-0.4,0-0.8,0.4-0.8,0.8v14.6c0,0.4,0.4,0.8,0.8,0.8h24.5v112c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V234h25.9c0.5,0,0.8-0.5,0.6-0.9l-6-14.9c-0.1-0.2-0.3-0.4-0.6-0.4H485.9z"/>
+                <path fill="var(--mk)" d="M591,217.9h-15.7c-0.3,0-0.6,0.2-0.8,0.5L554.2,269l-20.3-50.6c-0.1-0.3-0.4-0.5-0.8-0.5h-6.5h-9.5c-0.5,0-0.8,0.5-0.6,0.9l6.2,15.3h0l23.4,58.2V346c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8v-53.8l29.4-73.3C591.9,218.4,591.5,217.9,591,217.9z"/>
+              </g>
+        </svg>
+      </a>
+      <div class="dxt-topbar-right">
+        <nav class="dxt-nav" aria-label="Navegação principal">
+          <a href="#painel" data-view="painel" class="is-active" aria-current="page">Painel</a>
+          <a href="#historico" data-view="historico">Histórico</a>
+          <a href="#conversor" data-view="conversor">Conversor</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Título da página ===================== -->
+  <header class="dxt-pagehead">
+    <div class="dxt-pagehead-inner">
+      <div style="min-width:0">
+        <span class="dxt-eyebrow" id="sobrancelha">01 / Dados de mercado · Painel</span>
+        <h1>Cotação de moedas</h1>
+        <p>
+          PTAX de compra e venda do Banco Central para dez moedas — fechamento do dia, série
+          histórica com gráfico, conversor e exportação para Excel, CSV ou carga no SAP.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= TELA 01: PAINEL ================= -->
+    <section id="view-painel" data-view="painel">
+      <div class="dxt-toolbar barra">
+        <div class="dxt-controls">
+          <label class="campo">
+            <span class="dxt-label">Data do boletim</span>
+            <input type="date" id="painelData" class="dxt-input" />
+          </label>
+          <button class="dxt-btn dxt-btn--ghost dxt-btn--sm" id="painelRecente" title="Voltar ao fechamento mais recente">Mais recente</button>
+          <button class="dxt-btn dxt-btn--ghost dxt-btn--sm" id="painelAtualizar" title="Buscar de novo no Banco Central">
+            <svg class="ic" aria-hidden="true"><use href="#ic-refresh"/></svg>Atualizar
+          </button>
+        </div>
+        <span class="status" id="painelStatus" aria-live="polite"></span>
+      </div>
+
+      <div class="grupo-head">
+        <h2>PTAX de fechamento</h2>
+        <span class="dxt-badge" id="painelBadge">10 moedas</span>
+      </div>
+      <div class="dxt-grid cards-moedas" id="painelCards"></div>
+      <p class="nota">
+        Cotações em reais por unidade de moeda estrangeira (venda em destaque, compra abaixo). A variação
+        compara a venda com o fechamento anterior: <span class="dxt-up">cerceta</span> é alta da moeda,
+        <span class="dxt-down">âmbar</span> é baixa. Clique numa moeda para abrir o histórico.
+      </p>
+    </section>
+
+    <!-- ================= TELA 02: HISTÓRICO ================= -->
+    <section id="view-historico" data-view="historico" hidden>
+      <div class="dxt-toolbar barra">
+        <div class="dxt-controls filtros-hist">
+          <label class="campo campo-moeda">
+            <span class="dxt-label">Moeda</span>
+            <select id="histMoeda" class="dxt-select"></select>
+          </label>
+          <label class="campo campo-data">
+            <span class="dxt-label">De</span>
+            <input type="date" id="histDe" class="dxt-input" />
+          </label>
+          <label class="campo campo-data">
+            <span class="dxt-label">Até</span>
+            <input type="date" id="histAte" class="dxt-input" />
+          </label>
+          <div class="rng-group" id="histAtalhos" role="group" aria-label="Atalhos de período">
+            <button class="rng" data-atalho="1M">1M</button>
+            <button class="rng" data-atalho="3M">3M</button>
+            <button class="rng" data-atalho="6M">6M</button>
+            <button class="rng" data-atalho="1A">1A</button>
+            <button class="rng" data-atalho="5A">5A</button>
+          </div>
+        </div>
+        <div class="dxt-controls">
+          <button id="btnCsv" class="dxt-btn dxt-btn--ghost dxt-btn--sm" disabled><svg class="ic" aria-hidden="true"><use href="#ic-download"/></svg>CSV</button>
+          <button id="btnXlsx" class="dxt-btn dxt-btn--ghost dxt-btn--sm" disabled><svg class="ic" aria-hidden="true"><use href="#ic-download"/></svg>Excel</button>
+          <button id="btnSap" class="dxt-btn dxt-btn--sm" disabled><svg class="ic" aria-hidden="true"><use href="#ic-send"/></svg>Carga SAP</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="dxt-card dxt-card-body span4">
+          <div class="kpi-title">Último fechamento · venda</div>
+          <div class="kpi-value" id="kpiVenda">—</div>
+          <div class="kpi-foot">
+            <span class="dxt-badge" id="kpiCompra">Compra —</span>
+            <span class="dxt-badge" id="kpiData">—</span>
+          </div>
+        </div>
+        <div class="dxt-card dxt-card-body span4">
+          <div class="kpi-title">Variação vs. fechamento anterior</div>
+          <div class="kpi-value" id="kpiVar">—</div>
+          <div class="kpi-foot">
+            <span class="dxt-badge" id="kpiVarAbs">—</span>
+            <span class="dxt-badge" id="kpiAnterior">Anterior —</span>
+          </div>
+        </div>
+        <div class="dxt-card dxt-card-body span4">
+          <div class="kpi-title">Paridade com o dólar</div>
+          <div class="kpi-value" id="kpiParidade">—</div>
+          <div class="kpi-foot">
+            <span class="dxt-badge dxt-badge--info" id="kpiTipo">Tipo —</span>
+            <span class="dxt-badge" id="kpiUnidade">—</span>
+          </div>
+        </div>
+
+        <div class="dxt-card dxt-card-body span12">
+          <div class="row">
+            <strong>Gráfico</strong>
+            <div class="rng-group" id="histMedidas" role="group" aria-label="Série do gráfico">
+              <button class="rng active" data-medida="venda">Venda</button>
+              <button class="rng" data-medida="compra">Compra</button>
+              <button class="rng" data-medida="paridade">Paridade</button>
+            </div>
+            <span class="status" id="histStatus" aria-live="polite">—</span>
+          </div>
+          <div class="stats">
+            <span class="dxt-badge">Mín. <b id="statMin">—</b></span>
+            <span class="dxt-badge">Máx. <b id="statMax">—</b></span>
+            <span class="dxt-badge">Média <b id="statMed">—</b></span>
+            <span class="dxt-badge" id="statVarPill">Variação no período <b id="statVar">—</b></span>
+          </div>
+          <div class="grafico-box" id="histGrafico"></div>
+        </div>
+
+        <div class="dxt-card dxt-card-body span12">
+          <div class="row">
+            <strong>Tabela</strong>
+            <span class="status" id="histContagem">—</span>
+          </div>
+          <div class="table-wrap table-wrap--alta" tabindex="0" aria-label="Tabela de fechamentos (rola na vertical)">
+            <table class="dxt-table tabela-hist" id="histTabela">
+              <thead>
+                <tr>
+                  <th aria-sort="descending"><button class="th-ord" data-chave="data">Data</button></th>
+                  <th class="right"><button class="th-ord" data-chave="compra">Compra (R$)</button></th>
+                  <th class="right"><button class="th-ord" data-chave="venda">Venda (R$)</button></th>
+                  <th class="right"><button class="th-ord" data-chave="paridadeCompra">Paridade compra</button></th>
+                  <th class="right"><button class="th-ord" data-chave="paridadeVenda">Paridade venda</button></th>
+                  <th class="right">Boletim</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 03: CONVERSOR ================= -->
+    <section id="view-conversor" data-view="conversor" hidden>
+      <div class="conv-grid">
+        <div class="dxt-card dxt-card-body">
+          <div class="kpi-title">Converter</div>
+          <div class="conv-form">
+            <label class="campo conv-valor-campo">
+              <span class="dxt-label">Valor</span>
+              <input id="convValor" class="dxt-input mono" inputmode="decimal" autocomplete="off" value="1.000,00" />
+            </label>
+            <div class="conv-par">
+              <label class="campo">
+                <span class="dxt-label">De</span>
+                <select id="convDe" class="dxt-select"></select>
+              </label>
+              <button id="convInverter" class="dxt-btn dxt-btn--ghost dxt-btn--icon" type="button" title="Inverter moedas" aria-label="Inverter moedas">
+                <svg class="ic" aria-hidden="true"><use href="#ic-swap"/></svg>
+              </button>
+              <label class="campo">
+                <span class="dxt-label">Para</span>
+                <select id="convPara" class="dxt-select"></select>
+              </label>
+            </div>
+            <label class="campo">
+              <span class="dxt-label">Data da PTAX</span>
+              <input type="date" id="convData" class="dxt-input" />
+            </label>
+            <div class="campo">
+              <span class="dxt-label" id="convLadoRotulo">Taxa</span>
+              <div class="rng-group" id="convLado" role="group" aria-labelledby="convLadoRotulo">
+                <button class="rng active" data-lado="venda">PTAX de venda</button>
+                <button class="rng" data-lado="compra">PTAX de compra</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dxt-card dxt-card-body conv-res" aria-live="polite">
+          <div class="kpi-title">Resultado</div>
+          <div class="conv-resultado" id="convResultado">—</div>
+          <div class="kpi-foot" id="convResumo"></div>
+          <div class="conta" id="convConta"></div>
+          <div class="table-wrap" id="convTaxasBox" hidden>
+            <table class="dxt-table tabela-conv">
+              <thead>
+                <tr><th>Moeda</th><th class="right">Compra (R$)</th><th class="right">Venda (R$)</th><th class="right">Boletim</th></tr>
+              </thead>
+              <tbody id="convTaxas"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p class="nota">
+        Moeda estrangeira para reais: valor × PTAX. Reais para moeda estrangeira: valor ÷ PTAX. Entre duas moedas
+        estrangeiras, a conta passa pelo real (taxa cruzada = PTAX da origem ÷ PTAX do destino), com o mesmo lado
+        (compra ou venda) nas duas pontas. Resultado arredondado em 2 casas; taxas como publicadas pelo Banco Central.
+      </p>
+    </section>
+
+    <noscript>
+      <p class="noscript">
+        Esta ferramenta busca a PTAX no navegador e precisa de JavaScript. Ative o JavaScript para ver as
+        cotações do dólar, do euro e das demais moedas.
+      </p>
+    </noscript>
+
+    <!-- ================= PERGUNTAS FREQUENTES (só fora do iframe) =================
+         O mesmo texto vai no JSON-LD FAQPage do <head>: ao mudar um, mude o outro. -->
+    <section class="faq-sec dxt-so-site" aria-labelledby="faqTitulo">
+      <div class="grupo-head">
+        <h2 id="faqTitulo">Perguntas frequentes</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>O que é a PTAX?</summary>
+          <p>
+            É a taxa de câmbio de referência calculada pelo Banco Central do Brasil. Em cada dia útil, o Banco
+            Central consulta os dealers de câmbio em quatro janelas (por volta das 10h, 11h, 12h e 13h) e publica
+            um boletim a cada consulta; o boletim de fechamento, que sai pouco depois das 13h, é a média das
+            quatro e é o que contratos, NDFs e a contabilidade chamam de PTAX do dia.
+          </p>
+        </details>
+        <details>
+          <summary>Qual PTAX usar: compra ou venda?</summary>
+          <p>
+            Depende do uso. A PTAX de venda é a referência usual de contratos de câmbio e de NDF e costuma
+            corrigir obrigações em moeda estrangeira; a PTAX de compra costuma corrigir direitos, como contas a
+            receber e aplicações no exterior. Confirme a regra no contrato ou na política contábil da empresa: a
+            ferramenta mostra as duas e deixa escolher no conversor e na carga para o SAP.
+          </p>
+        </details>
+        <details>
+          <summary>O que são as moedas tipo A e tipo B?</summary>
+          <p>
+            Na PTAX, cada moeda tem uma paridade com o dólar. Nas moedas tipo A (iene, franco suíço, dólar
+            canadense e coroas dinamarquesa, norueguesa e sueca), a paridade é quantas unidades da moeda valem 1
+            dólar; nas tipo B (euro, libra esterlina e dólar australiano), é quantos dólares vale 1 unidade da
+            moeda. O dólar americano é a referência.
+          </p>
+        </details>
+        <details>
+          <summary>Por que a cotação de hoje ainda não aparece?</summary>
+          <p>
+            O boletim de fechamento sai por volta das 13h10 (horário de Brasília) nos dias úteis. Antes disso, e
+            em fins de semana e feriados, o painel mostra o último fechamento disponível; a data e a hora do
+            boletim aparecem em cada moeda.
+          </p>
+        </details>
+        <details>
+          <summary>Como levar as cotações para o SAP?</summary>
+          <p>
+            No Histórico, escolha a moeda e o período e clique em Carga SAP. A ferramenta gera o Excel no layout
+            do app Importar Dados de Mercado (SAP Fiori F2610) para taxas de câmbio, com categoria, tipo de taxa
+            (M por padrão), moeda de origem, moeda de destino (BRL), data efetiva e taxa de compra ou de venda.
+            Confira os nomes das colunas com o modelo baixado do próprio F2610 antes da primeira carga.
+          </p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== Rodapé ===================== -->
+  <!-- A coluna "Ferramentas" é idêntica nas cinco ferramentas de Dados de Mercado
+       (calculadoramtmdexterity, cotacao-derivativos-b3, taxas-indices, bndes-um e
+       cotacaodemoedas): ao incluir ou renomear uma ferramenta, atualize nas cinco.
+       Endereços sempre no domínio da Dexterity, nunca *.vercel.app.
+       Na ferramenta atual, o link leva aria-current="page". -->
+  <footer class="dxt-footer">
+    <div class="dxt-footer-inner">
+      <div class="dxt-footer-brand">
+        <a href="https://www.dexterityit.com.br" aria-label="Dexterity IT Solutions — ir para o site">
+          <svg class="dxt-logo" viewBox="0 0 445.4 100" role="img" aria-label="Dexterity IT Solutions"
+               style="--mk:var(--dxt-off);--acc:var(--dxt-cerceta)">
+            <g transform="scale(0.64475) translate(-206.8,-19)">
+                  <path fill="var(--mk)" d="M306.8,41.1c0,6.7-1.3,13.1-3.8,19.1s-6.1,11.4-10.8,16.1c-4.7,4.7-10.2,8.4-16.1,10.8c-6,2.5-12.4,3.8-19.1,3.8c-0.2,0-1.8,0-3.4,0c-1.1,0-2.2,0-2.8,0.1c-0.4,0-0.7-0.2-0.9-0.5l-21.6-35.4l-21-34.4c-0.4-0.6,0.1-1.5,0.8-1.5h48.5h49.2c0.5,0,1,0.4,1,1v10V41.1z"/>
+                  <path fill="var(--acc)" d="M318.4,40.7c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0.1,6.6,1.4,12.9,3.9,18.8c2.5,5.9,6.1,11.3,10.7,15.9c4.7,4.7,10.2,8.4,16.1,10.8c6,2.5,12.4,3.8,19.1,3.8h17.4h15.7c0.8,0,1.2-0.8,0.8-1.5l-10-16.4l-10.9-17.8c-6.8-11.2-14.9-20.2-24.5-26.4c-9.6-6.2-20.8-9.6-33.9-9.6h-3.4c-0.5,0-1,0.4-1,1V30V40.7z"/>
+                  <path fill="var(--mk)" d="M306.8,152.3c0-6.7-1.3-13.1-3.8-19.1s-6.1-11.4-10.8-16.1c-4.7-4.7-10.2-8.4-16.1-10.8c-6-2.5-12.4-3.8-19.1-3.8c-0.2,0-1.8,0-3.4,0c-1.1,0-2.2,0-2.8-0.1c-0.4,0-0.7,0.2-0.9,0.5l-21.6,35.4l-21,34.4c-0.4,0.6,0.1,1.5,0.8,1.5h48.5h49.2c0.5,0,1-0.4,1-1v-10V152.3z"/>
+                  <path fill="var(--mk)" d="M368.2,102.5c-6.7,0-13.1,1.3-19.1,3.8s-11.4,6.1-16.1,10.8c-4.7,4.7-8.3,10.1-10.8,16.1c-2.5,5.9-3.8,12.4-3.8,19c0,0,0,0.1,0,0.1s0,0.1,0,0.1c0,0,0,0,0,0c0,0,0,0,0,0v5.1v5.1v5.8v4.8c0,0.5,0.5,1,1,1c12.5-0.4,24.5-3.9,35-9.9c10.8-6.2,20.1-15.1,26.8-26.1l10.9-17.8l10-16.3c0.4-0.6-0.1-1.5-0.8-1.5h-15.7H368.2z"/>
+                </g>
+            <g transform="translate(152,17) scale(0.51123) translate(-17.5,-217.5)">
+                  <path fill="var(--mk)" d="M41.5,346.9h-23c-0.4,0-0.8-0.4-0.8-0.8V218.6c0-0.4,0.4-0.8,0.8-0.8h23c10.5,0,19.9,5.4,26.3,15.3c7.2,11,10.8,27.6,10.8,49.3c0,21.7-3.6,38.3-10.8,49.3C61.3,341.5,52,346.9,41.5,346.9zM33.9,330.7h7.6c13.1,0,21-18.1,21-48.4s-7.8-48.4-21-48.4h-7.6V330.7z"/>
+                  <path fill="var(--mk)" d="M141.3,233.2v-14.6c0-0.4-0.4-0.8-0.8-0.8H93.6c-0.4,0-0.8,0.4-0.8,0.8v55.6v16.2v55.6c0,0.4,0.4,0.8,0.8,0.8h46.9c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8H109v-40.2h26.4c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8H109V234h31.5C141,234,141.3,233.7,141.3,233.2z"/>
+                  <path fill="var(--mk)" d="M148.8,346.9h15.7c0.3,0,0.6-0.2,0.8-0.5l17-42.3l17,42.3c0.1,0.3,0.4,0.5,0.8,0.5h15.7c0.6,0,1-0.6,0.8-1.1L191,282.3l19.4-48.3h22.8v112c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V234H274c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-24.6h-16.2h-16.3H200c-0.3,0-0.6,0.2-0.8,0.5l-17,42.3l-17-42.3c-0.1-0.3-0.4-0.5-0.8-0.5h-15.7c-0.6,0-1,0.6-0.8,1.1l25.5,63.4l-25.5,63.4C147.9,346.3,148.3,346.9,148.8,346.9z"/>
+                  <path fill="var(--mk)" d="M332.7,233.2v-14.6c0-0.4-0.4-0.8-0.8-0.8H285c-0.4,0-0.8,0.4-0.8,0.8v55.6v16.2v55.6c0,0.4,0.4,0.8,0.8,0.8h46.9c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-31.5v-40.2h26.4c0.4,0,0.8-0.4,0.8-0.8v-14.6c0-0.4-0.4-0.8-0.8-0.8h-26.4V234h31.5C332.3,234,332.7,233.7,332.7,233.2z"/>
+                  <path fill="var(--mk)" d="M363.1,297.1v-16.2V234h4c13.9,0,21,7.9,21,23.4c0,12.8-4.7,20.3-14.3,22.7l-9,2.2l25.7,64c0.1,0.3,0.4,0.5,0.8,0.5H407c0.6,0,1-0.6,0.8-1.1l-21.4-53.3c11.5-6.3,18-18.6,18-35c0-29.2-19.2-39.6-37.1-39.6h-19.4c-0.4,0-0.8,0.4-0.8,0.8v62.2v16.2v49c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V297.1z"/>
+                  <path fill="var(--acc)" d="M434,346.9h-14.6c-0.4,0-0.8-0.4-0.8-0.8V218.7c0-0.4,0.4-0.8,0.8-0.8H434c0.4,0,0.8,0.4,0.8,0.8v127.4C434.8,346.5,434.4,346.9,434,346.9z"/>
+                  <path fill="var(--acc)" d="M485.9,217.9h-16.2h-17.1h-7.4c-0.4,0-0.8,0.4-0.8,0.8v14.6c0,0.4,0.4,0.8,0.8,0.8h24.5v112c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8V234h25.9c0.5,0,0.8-0.5,0.6-0.9l-6-14.9c-0.1-0.2-0.3-0.4-0.6-0.4H485.9z"/>
+                  <path fill="var(--mk)" d="M591,217.9h-15.7c-0.3,0-0.6,0.2-0.8,0.5L554.2,269l-20.3-50.6c-0.1-0.3-0.4-0.5-0.8-0.5h-6.5h-9.5c-0.5,0-0.8,0.5-0.6,0.9l6.2,15.3h0l23.4,58.2V346c0,0.4,0.4,0.8,0.8,0.8h14.6c0.4,0,0.8-0.4,0.8-0.8v-53.8l29.4-73.3C591.9,218.4,591.5,217.9,591,217.9z"/>
+                </g>
+          </svg>
+        </a>
+        <p>Consultoria SAP especializada em Tesouraria e Risco.</p>
+        <address>
+          Rua Visconde do Rio Branco, 1488 — Conj. 909<br />
+          Centro · Curitiba · PR<br />
+          CEP 80420-210
+        </address>
+      </div>
+
+      <div>
+        <h4 class="dxt-eyebrow dxt-eyebrow-muted">Ferramentas</h4>
+        <ul>
+          <li><a href="https://www.dexterityit.com.br/calculadora-mtm-ndf">Calculadora MTM</a></li>
+          <li><a href="https://www.dexterityit.com.br/derivativos-listados-b3">Derivativos Listados B3</a></li>
+          <li><a href="https://www.dexterityit.com.br/indicadores-economicos">Indicadores Econômicos</a></li>
+          <li><a href="https://www.dexterityit.com.br/moedas-bndes">Moedas BNDES</a></li>
+          <li><a href="https://www.dexterityit.com.br/cotacao-de-moedas" aria-current="page">Cotação de Moedas</a></li>
+          <li><a href="https://www.dexterityit.com.br/calculadora-cdb">Calculadora CDB</a></li>
+          <li><a href="https://www.dexterityit.com.br/titulos-publicos">Títulos Públicos</a></li>
+          <li><a href="https://www.dexterityit.com.br/ferramentas">Todas as ferramentas &rarr;</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="dxt-eyebrow dxt-eyebrow-muted">Empresa</h4>
+        <ul>
+          <li><a href="https://www.dexterityit.com.br/solucoes">Soluções</a></li>
+          <li><a href="https://www.dexterityit.com.br/cursos">Cursos</a></li>
+          <li><a href="https://www.dexterityit.com.br/experiencia">Experiência</a></li>
+          <li><a href="https://www.dexterityit.com.br/contato">Falar com a gente</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dxt-footer-nota">
+      <div><p>
+        As cotações exibidas são a PTAX publicada pelo Banco Central do Brasil (API Olinda, serviço PTAX),
+        obtida automaticamente, e destinam-se exclusivamente a fins de conferência e apoio operacional: não
+        substituem a publicação oficial do Banco Central. A Dexterity IT Solutions não se responsabiliza pela
+        exatidão, atualidade ou completude dos dados apresentados, nem por decisões tomadas com base neles.
+        Confirme sempre os valores na publicação oficial do Banco Central do Brasil.
+      </p></div>
+    </div>
+  </footer>
+
+  <!-- ===================== Modal: carga SAP (F2610) ===================== -->
+  <div id="modalSap" class="dxt-modal" role="dialog" aria-modal="true" aria-labelledby="sapTitulo" hidden>
+    <div class="dxt-modal-box modal-sap">
+      <div class="row">
+        <strong id="sapTitulo" class="dxt-card-title">Carga SAP — taxas de câmbio</strong>
+        <button id="sapFechar" class="dxt-btn dxt-btn--ghost dxt-btn--icon" title="Fechar" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#ic-x"/></svg></button>
+      </div>
+      <div class="modal-corpo">
+        <p>
+          Gera o Excel no layout do app
+          <a href="https://fioriappslibrary.hana.ondemand.com/sap/fix/externalViewer/#/detail/Apps('F2610')/S32PCE"
+             target="_blank" rel="noopener">Importar Dados de Mercado (SAP Fiori F2610)</a>
+          para taxas de câmbio, com uma linha por fechamento do período da tela. Antes da primeira carga, confira
+          os nomes e a ordem das colunas com o modelo baixado do próprio F2610 no seu sistema.
+        </p>
+        <div class="sap-campos">
+          <label class="campo">
+            <span class="dxt-label">Categoria</span>
+            <input id="sapCategoria" class="dxt-input mono" value="01" maxlength="4" autocomplete="off" />
+          </label>
+          <label class="campo">
+            <span class="dxt-label">Tipo de taxa</span>
+            <input id="sapTipo" class="dxt-input mono" value="M" maxlength="4" autocomplete="off" />
+          </label>
+          <div class="campo">
+            <span class="dxt-label">Moedas</span>
+            <span class="dxt-badge sap-par" id="sapPar">— → BRL</span>
+          </div>
+          <div class="campo">
+            <span class="dxt-label" id="sapLadoRotulo">Taxa</span>
+            <div class="rng-group" id="sapLado" role="group" aria-labelledby="sapLadoRotulo">
+              <button class="rng active" data-lado="venda">Venda</button>
+              <button class="rng" data-lado="compra">Compra</button>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-foot"><span class="dxt-badge" id="sapResumo">—</span></div>
+        <div class="table-wrap sap-previa">
+          <table class="dxt-table" id="sapPrevia"><thead></thead><tbody></tbody></table>
+        </div>
+        <p class="nota" id="sapNota">Conferência: primeiras e últimas linhas do arquivo.</p>
+        <div class="modal-acoes">
+          <button id="sapCancelar" class="dxt-btn dxt-btn--ghost">Cancelar</button>
+          <button id="btnSapGerar" class="dxt-btn"><svg class="ic" aria-hidden="true"><use href="#ic-send"/></svg>Gerar Excel para SAP</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Cotação de Moedas — Dexterity IT Solutions
+# O endereço canônico da ferramenta é https://www.dexterityit.com.br/cotacao-de-moedas
+# (ver <link rel="canonical"> no index.html). As funções em /api/ são proxies da
+# PTAX do Banco Central e não têm conteúdo para indexar; site/ guarda os blocos
+# colados no Odoo (a página publicada é a do site, não estes arquivos).
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /site/

@@ -1,0 +1,175 @@
+<!--
+  Cotação de Moedas — bloco da página https://www.dexterityit.com.br/cotacao-de-moedas
+  (Odoo › Site › bloco Código Incorporado, conforme a MK-02-004, opção A).
+
+  Vai DENTRO da casca padrão das páginas de ferramenta do site (faixa de cotações, navegação,
+  rodapé e CSS .dxt), no lugar do conteúdo "em breve". Todas as classes usam o prefixo dx- e o
+  CSS abaixo é escopado em .dxt, para não vazar para as páginas de app do Odoo.
+
+  Fonte da verdade: repositório dfg-dexterity/cotacaodemoedas, pasta site/. Não editar direto no
+  Odoo — alterar aqui, testar e colar de novo.
+
+  SEO da página no painel "Otimizar SEO" do Odoo:
+    Título:    Cotação de moedas hoje: PTAX do dólar, euro e mais 8
+    Descrição: PTAX de compra e venda do dólar, euro, libra, iene e mais 6 moedas, direto do Banco Central: fechamento do dia, série histórica, conversor e carga no SAP.
+
+  ATENÇÃO ao publicar: a página /cotacao-de-moedas está hoje como "em breve". Ao colar este
+  bloco, tire o aviso de "em breve", desmarque o "noindex" (Otimizar SEO › Indexação) e confira
+  se a página está publicada e visível no menu/rodapé. Só então troque o cartão da vitrine
+  (site/odoo-cartao-vitrine.html) e peça a indexação no Search Console.
+
+  O iframe aponta para o endereço técnico da aplicação na Vercel enquanto não houver subdomínio
+  da Dexterity para ela.
+-->
+<style>
+  .dxt .dx-fer-head { padding: 56px 0 28px; }
+  .dxt .dx-fer-head .dx-k {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase; color: #00B3AC;
+  }
+  .dxt .dx-fer-head h1 { margin: 12px 0 0; font-size: clamp(2.25rem, 7vw, 3.5rem); line-height: .92; }
+  .dxt .dx-fer-head p { margin: 16px 0 0; max-width: 44rem; font-size: 15px; line-height: 1.6; color: #A49F98; }
+  .dxt .dx-frame { border: 1px solid var(--line, rgba(247,243,231,.13)); background: var(--surface, #242424); overflow: hidden; }
+  .dxt .dx-frame iframe { display: block; width: 100%; height: clamp(680px, 82vh, 1100px); border: 0; background: var(--base, #1B1B1B); }
+  .dxt .dx-fer-texto { padding: 56px 0 8px; max-width: 64rem; }
+  .dxt .dx-fer-texto h2 { margin: 40px 0 12px; font-size: 1.5rem; }
+  .dxt .dx-fer-texto h2:first-child { margin-top: 0; }
+  .dxt .dx-fer-texto p { margin: 0 0 14px; font-size: 16px; line-height: 1.7; color: #A49F98; }
+  .dxt .dx-faq { margin-top: 8px; border-top: 1px solid var(--line, rgba(247,243,231,.13)); }
+  .dxt .dx-faq details { border-bottom: 1px solid var(--line, rgba(247,243,231,.13)); }
+  .dxt .dx-faq summary {
+    display: flex; justify-content: space-between; gap: 16px; padding: 16px 0;
+    cursor: pointer; list-style: none; font-size: 16px; color: #F7F3E7;
+  }
+  .dxt .dx-faq summary::-webkit-details-marker { display: none; }
+  .dxt .dx-faq summary::after { content: "+"; flex: none; font-family: 'IBM Plex Mono', monospace; color: #00B3AC; }
+  .dxt .dx-faq details[open] summary::after { content: "\2212"; }
+  .dxt .dx-faq details p { margin: 0 0 18px; }
+</style>
+
+<section class="dx-section"><div class="dx-wrap">
+  <header class="dx-fer-head">
+    <div class="dx-k">Ferramentas · Câmbio</div>
+    <h1>Cotação de moedas</h1>
+    <p>
+      PTAX de compra e venda do Banco Central para o dólar, o euro, a libra, o iene e mais seis
+      moedas: fechamento do dia, série histórica com gráfico, conversor e exportação para Excel, CSV
+      ou carga no SAP.
+    </p>
+  </header>
+  <div class="dx-frame">
+    <iframe src="https://cotacaodemoedas.vercel.app/?embed=1"
+            title="Cotação de Moedas — PTAX do Banco Central para 10 moedas" loading="lazy"></iframe>
+  </div>
+</div></section>
+
+<section class="dx-section"><div class="dx-wrap"><div class="dx-fer-texto">
+  <h2>O que a ferramenta faz</h2>
+  <p>
+    O painel mostra a PTAX de fechamento das dez moedas publicadas pelo Banco Central, com compra e
+    venda em reais, paridade com o dólar, variação contra o fechamento anterior e a data e a hora do
+    boletim. Um clique na moeda abre o histórico, com atalhos de um mês a cinco anos, gráfico,
+    mínimo, máximo, média, variação do período e tabela ordenável. O conversor leva um valor para
+    reais, de reais para a moeda ou entre duas moedas estrangeiras e mostra a conta feita.
+  </p>
+
+  <h2>Como os números são obtidos</h2>
+  <p>
+    Cada consulta vai direto ao serviço PTAX da API Olinda do Banco Central do Brasil, sem digitação
+    manual, e a ferramenta usa o boletim de fechamento de cada dia útil. Em fins de semana e
+    feriados vale o último fechamento disponível, sempre com a data à vista. Entre duas moedas
+    estrangeiras, a conversão passa pelo real, com a taxa cruzada explícita.
+  </p>
+
+  <h2>Do histórico ao SAP</h2>
+  <p>
+    A tela de histórico gera o Excel no layout do app Importar Dados de Mercado (SAP Fiori F2610)
+    para taxas de câmbio: categoria, tipo de taxa (M por padrão), moeda de origem, moeda de destino
+    (BRL), data efetiva e taxa de compra ou de venda, uma linha por fechamento. Uma janela de
+    conferência mostra as primeiras e as últimas linhas antes de gerar o arquivo. A mesma série sai
+    em CSV ou Excel para conciliação.
+  </p>
+
+  <h2>Perguntas frequentes</h2>
+  <div class="dx-faq">
+    <details>
+      <summary>O que é a PTAX?</summary>
+      <p>
+        É a taxa de câmbio de referência calculada pelo Banco Central do Brasil. Em cada dia útil, o
+        Banco Central consulta os dealers de câmbio em quatro janelas (por volta das 10h, 11h, 12h e
+        13h) e publica um boletim a cada consulta; o boletim de fechamento, que sai pouco depois das
+        13h, é a média das quatro e é o que contratos, NDFs e a contabilidade chamam de PTAX do dia.
+      </p>
+    </details>
+    <details>
+      <summary>Qual PTAX usar: compra ou venda?</summary>
+      <p>
+        Depende do uso. A PTAX de venda é a referência usual de contratos de câmbio e de NDF e costuma
+        corrigir obrigações em moeda estrangeira; a PTAX de compra costuma corrigir direitos, como
+        contas a receber e aplicações no exterior. Confirme a regra no contrato ou na política
+        contábil da empresa: a ferramenta mostra as duas e deixa escolher no conversor e na carga
+        para o SAP.
+      </p>
+    </details>
+    <details>
+      <summary>O que são as moedas tipo A e tipo B?</summary>
+      <p>
+        Na PTAX, cada moeda tem uma paridade com o dólar. Nas moedas tipo A (iene, franco suíço, dólar
+        canadense e coroas dinamarquesa, norueguesa e sueca), a paridade é quantas unidades da moeda
+        valem 1 dólar; nas tipo B (euro, libra esterlina e dólar australiano), é quantos dólares vale
+        1 unidade da moeda. O dólar americano é a referência.
+      </p>
+    </details>
+    <details>
+      <summary>Por que a cotação de hoje ainda não aparece?</summary>
+      <p>
+        O boletim de fechamento sai por volta das 13h10 (horário de Brasília) nos dias úteis. Antes
+        disso, e em fins de semana e feriados, o painel mostra o último fechamento disponível; a data
+        e a hora do boletim aparecem em cada moeda.
+      </p>
+    </details>
+  </div>
+</div></div></section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.dexterityit.com.br/cotacao-de-moedas#ferramenta",
+      "name": "Cotação de Moedas",
+      "url": "https://www.dexterityit.com.br/cotacao-de-moedas",
+      "description": "PTAX de compra e venda e paridade com o dólar de dez moedas (dólar americano, euro, libra esterlina, iene, franco suíço, dólar canadense, dólar australiano e coroas dinamarquesa, norueguesa e sueca), direto do Banco Central do Brasil: painel do fechamento do dia, série histórica com gráfico, conversor de moedas e exportação para CSV, Excel e carga no SAP (F2610).",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "pt-BR",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+      "publisher": {
+        "@type": "ProfessionalService",
+        "@id": "https://www.dexterityit.com.br/#organizacao",
+        "name": "Dexterity IT Solutions",
+        "url": "https://www.dexterityit.com.br"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.dexterityit.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Ferramentas", "item": "https://www.dexterityit.com.br/ferramentas" },
+        { "@type": "ListItem", "position": 3, "name": "Cotação de Moedas", "item": "https://www.dexterityit.com.br/cotacao-de-moedas" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "O que é a PTAX?", "acceptedAnswer": { "@type": "Answer", "text": "É a taxa de câmbio de referência calculada pelo Banco Central do Brasil. Em cada dia útil, o Banco Central consulta os dealers de câmbio em quatro janelas (por volta das 10h, 11h, 12h e 13h) e publica um boletim a cada consulta; o boletim de fechamento, que sai pouco depois das 13h, é a média das quatro e é o que contratos, NDFs e a contabilidade chamam de PTAX do dia." } },
+        { "@type": "Question", "name": "Qual PTAX usar: compra ou venda?", "acceptedAnswer": { "@type": "Answer", "text": "Depende do uso. A PTAX de venda é a referência usual de contratos de câmbio e de NDF e costuma corrigir obrigações em moeda estrangeira; a PTAX de compra costuma corrigir direitos, como contas a receber e aplicações no exterior. Confirme a regra no contrato ou na política contábil da empresa: a ferramenta mostra as duas e deixa escolher no conversor e na carga para o SAP." } },
+        { "@type": "Question", "name": "O que são as moedas tipo A e tipo B?", "acceptedAnswer": { "@type": "Answer", "text": "Na PTAX, cada moeda tem uma paridade com o dólar. Nas moedas tipo A (iene, franco suíço, dólar canadense e coroas dinamarquesa, norueguesa e sueca), a paridade é quantas unidades da moeda valem 1 dólar; nas tipo B (euro, libra esterlina e dólar australiano), é quantos dólares vale 1 unidade da moeda. O dólar americano é a referência." } },
+        { "@type": "Question", "name": "Por que a cotação de hoje ainda não aparece?", "acceptedAnswer": { "@type": "Answer", "text": "O boletim de fechamento sai por volta das 13h10 (horário de Brasília) nos dias úteis. Antes disso, e em fins de semana e feriados, o painel mostra o último fechamento disponível; a data e a hora do boletim aparecem em cada moeda." } }
+      ]
+    }
+  ]
+}
+</script>

@@ -1,0 +1,14 @@
+{
+  "name": "cotacaodemoedas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cotação de Moedas — PTAX do Banco Central (compra, venda e paridade) de 10 moedas, com histórico, conversor e exportação para Excel e SAP — Dexterity IT Solutions",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "dev": "node scripts/dev-server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
